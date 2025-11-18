@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 50%, #02010a, #000010);
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      margin-top: 120px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      margin: 15px;
+      font-size: 22px;
+      color: #00eaff;
+      border: 2px solid #00eaff;
+      background: transparent;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #00eaff;
+      color: black;
+      box-shadow: 0 0 20px #00eaff;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .question {
+      margin-top: 40px;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .answer-btn {
+      display: block;
+      margin: 12px auto;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #00eaff;
+      color: white;
+      cursor: pointer;
+      width: 60%;
+      border-radius: 10px;
+      transition: 0.2s;
+      font-size: 18px;
+    }
+
+    .answer-btn:hover {
+      background: #00eaff;
+      color: black;
+    }
+
+    #feedback {
+      margin-top: 20px;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    #result {
+      margin-top: 40px;
+      font-size: 30px;
+      color: #00eaff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="stars"></canvas>
+
+  <!-- Boshlash ekrani -->
+  <div id="start-screen" class="container">
+    <h1>Testni boshlash</h1>
+    <button class="btn" onclick="showSubjects()">Testni boshlash</button>
+  </div>
+
+  <!-- Fan tanlash -->
+  <div id="subject-screen" class="container hidden">
+    <h2>Fanni tanlang</h2>
+    <button class="btn" onclick="startTest('math')">Matematika</button>
+    <button class="btn" onclick="startTest('eng')">Ingliz tili</button>
+    <button class="btn" onclick="startTest('it')">IT</button>
+    <button class="btn" onclick="startTest('sew')">Tikuvchilik</button>
+    <button class="btn" onclick="startTest('elec')">Elektrik</button>
+
+    <br><br>
+    <button class="btn" onclick="goHome()">Panelga qaytish</button>
+  </div>
+
+  <!-- Test ekrani -->
+  <div id="test-screen" class="container hidden">
+    <div id="question-text" class="question"></div>
+    <div id="answers"></div>
+    <div id="feedback"></div>
+
+    <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Keyingi savol</button>
+
+    <br><br>
+    <button class="btn" onclick="restart()">Restart</button>
+    <button class="btn" onclick="goHome()">Panelga qaytish</button>
+  </div>
+
+  <!-- Natija -->
+  <div id="result"></div>
+
+  <script>
+    const questions = {
+      math: [
+        { q: "5 × 6 =", a: ["30", "20", "25"], correct: 0 },
+        { q: "12 ÷ 3 =", a: ["4", "5", "3"], correct: 0 },
+        { q: "15 + 27 =", a: ["42", "41", "40"], correct: 0 },
+        { q: "100 − 45 =", a: ["55", "65", "45"], correct: 0 },
+        { q: "9 × 9 =", a: ["81", "72", "90"], correct: 0 },
+        { q: "48 ÷ 6 =", a: ["8", "6", "10"], correct: 0 },
+        { q: "7² =", a: ["49", "42", "56"], correct: 0 },
+        { q: "√64 =", a: ["8", "6", "7"], correct: 0 },
+        { q: "25% ning 100 =", a: ["25", "20", "30"], correct: 0 },
+        { q: "3.14 bu…", a: ["Pi", "E", "T"], correct: 0 },
+        { q: "4 × 8 =", a: ["32", "28", "36"], correct: 0 },
+        { q: "6 × 7 =", a: ["42", "36", "49"], correct: 0 },
+        { q: "11 × 11 =", a: ["121", "111", "101"], correct: 0 },
+        { q: "10% ning 200 =", a: ["20", "10", "30"], correct: 0 },
+        { q: "3³ =", a: ["27", "9", "18"], correct: 0 },
+        { q: "72 ÷ 8 =", a: ["9", "8", "10"], correct: 0 },
+        { q: "2 + 2 × 2 =", a: ["6", "8", "4"], correct: 0 },
+        { q: "0 ga bo‘lish mumkinmi?", a: ["Yo‘q", "Ha", "Ba'zan"], correct: 0 },
+        { q: "1 soat necha daqiqa?", a: ["60", "100", "45"], correct: 0 },
+        { q: "1 km nech metr?", a: ["1000", "100", "1500"], correct: 0 },
+        { q: "15 × 4 =", a: ["60", "45", "55"], correct: 0 },
+        { q: "90° bu…", a: ["To‘g‘ri burchak", "O‘tkir", "O‘tkir"], correct: 0 },
+        { q: "Triada nechta tomonga ega?", a: ["3", "4", "5"], correct: 0 },
+        { q: "6 × 4 =", a: ["24", "20", "28"], correct: 0 },
+        { q: "50% ning 200 =", a: ["100", "50", "80"], correct: 0 },
+        { q: "9 + 18 =", a: ["27", "26", "28"], correct: 0 },
+        { q: "30 ÷ 5 =", a: ["6", "5", "7"], correct: 0 },
+        { q: "2 × 13 =", a: ["26", "28", "24"], correct: 0 },
+        { q: "80 − 15 =", a: ["65", "60", "70"], correct: 0 },
+        { q: "7 + 8 =", a: ["15", "14", "16"], correct: 0 }
+      ],
+      eng: [
+        { q: "Hello so‘zining ma’nosi?", a: ["Salom", "Rahmat", "Hayr"], correct: 0 },
+        { q: "Goodbye ma’nosi?", a: ["Hayr", "Salom", "Iltimos"], correct: 0 },
+        { q: "Cat?", a: ["Mushuk", "It", "Sigir"], correct: 0 },
+        { q: "Dog?", a: ["It", "Mushuk", "Qush"], correct: 0 },
+        { q: "Apple?", a: ["Olma", "Anor", "Nok"], correct: 0 },
+        { q: "Book?", a: ["Kitob", "Stol", "Oyna"], correct: 0 },
+        { q: "School?", a: ["Maktab", "Bog‘", "Uy"], correct: 0 },
+        { q: "Teacher?", a: ["O‘qituvchi", "Talaba", "Haydovchi"], correct: 0 },
+        { q: "Student?", a: ["Talaba", "O‘qituvchi", "Shifokor"], correct: 0 },
+        { q: "Water?", a: ["Suv", "Choy", "Sharbat"], correct: 0 },
+        { q: "Car?", a: ["Mashina", "Velosiped", "Samolyot"], correct: 0 },
+        { q: "Yes?", a: ["Ha", "Yo‘q", "Balki"], correct: 0 },
+        { q: "No?", a: ["Yo‘q", "Ha", "Kut"], correct: 0 },
+        { q: "Sun?", a: ["Quyosh", "Oy", "Yulduz"], correct: 0 },
+        { q: "Moon?", a: ["Oy", "Quyosh", "Yulduz"], correct: 0 },
+        { q: "Star?", a: ["Yulduz", "Oy", "Yer"], correct: 0 },
+        { q: "Blue?", a: ["Ko‘k", "Qizil", "Oq"], correct: 0 },
+        { q: "Red?", a: ["Qizil", "Ko‘k", "Sariq"], correct: 0 },
+        { q: "Milk?", a: ["Sut", "Suv", "Sharbat"], correct: 0 },
+        { q: "Bread?", a: ["Non", "Yog‘", "Go‘sht"], correct: 0 },
+        { q: "Phone?", a: ["Telefon", "Kompyuter", "Noutbuk"], correct: 0 },
+        { q: "Table?", a: ["Stol", "Deraza", "Eshik"], correct: 0 },
+        { q: "Window?", a: ["Deraza", "Eshik", "Shift"], correct: 0 },
+        { q: "Chair?", a: ["Stul", "Stol", "Divan"], correct: 0 },
+        { q: "Pen?", a: ["Ruchka", "Qalam", "Kitob"], correct: 0 },
+        { q: "Flower?", a: ["Gul", "Daraxt", "O‘t"], correct: 0 },
+        { q: "Home?", a: ["Uy", "Ko‘cha", "Oshxona"], correct: 0 },
+        { q: "Black?", a: ["Qora", "Oq", "Ko‘k"], correct: 0 },
+        { q: "White?", a: ["Oq", "Qora", "Sariq"], correct: 0 },
+        { q: "Family?", a: ["Oila", "Do‘st", "Qo‘shni"], correct: 0 }
+      ],
+      it: [
+        { q: "Kompyuterning asosiy miyasi?", a: ["CPU", "GPU", "SSD"], correct: 0 },
+        { q: "Ctrl + C nima qiladi?", a: ["Nusxa oladi", "Kesadi", "Qo‘shadi"], correct: 0 },
+        { q: "Ctrl + V nima qiladi?", a: ["Qo‘yadi", "O‘chiradi", "Izlaydi"], correct: 0 },
+        { q: "Ctrl + X?", a: ["Kesadi", "Kopyalaydi", "To‘xtatadi"], correct: 0 },
+        { q: "Ctrl + Z?", a: ["Orqaga qaytaradi", "O‘chiradi", "Yaratadi"], correct: 0 },
+        { q: "Ctrl + A?", a: ["Hammasini belgilaydi", "Qo‘shadi", "Izlaydi"], correct: 0 },
+        { q: "Ctrl + S?", a: ["Saqlaydi", "O‘chiradi", "Ochadi"], correct: 0 },
+        { q: "Ctrl + F?", a: ["Qidiradi", "Saqlaydi", "To‘xtatadi"], correct: 0 },
+        { q: "Alt + Tab?", a: ["Oynalar o‘rtasida almashadi", "O‘chadi", "Ekran oladi"], correct: 0 },
+        { q: "Print Screen?", a: ["Skrin oladi", "Chiqadi", "Yopadi"], correct: 0 },
+        { q: "RAM nima?", a: ["Tezkor xotira", "Doimiy xotira", "Protsessor"], correct: 0 },
+        { q: "SSD nima?", a: ["Tez xotira qurilmasi", "Video karta", "Monitor turi"], correct: 0 },
+        { q: "GPU nima?", a: ["Grafik karta", "Protsessor", "Xotira"], correct: 0 },
+        { q: "Ctrl + Shift + Esc?", a: ["Task Manager", "Bosh menyu", "Ovozni oshiradi"], correct: 0 },
+        { q: "Ctrl + Alt + Delete?", a: ["Tizim menyusi", "Skachat qiladi", "Print qiladi"], correct: 0 },
+
+        { q: "Shift + Delete?", a: ["Butunlay o‘chiradi", "Korzina ga yuboradi", "Yashiradi"], correct: 0 },
+        { q: "Ctrl + P?", a: ["Print qiladi", "Pauza qiladi", "Yopadi"], correct: 0 },
+        { q: "Ctrl + T?", a: ["Yangi tab ochadi", "Yopadi", "Saqlaydi"], correct: 0 },
+        { q: "Ctrl + W?", a: ["Tabni yopadi", "Saqlaydi", "O‘chadi"], correct: 0 },
+        { q: "Ctrl + Shift + N?", a: ["Inkognito ochadi", "Yangi fayl", "Keshni tozalaydi"], correct: 0 },
+        { q: "F5 nima qiladi?", a: ["Yangilaydi", "Skrin oladi", "Yopadi"], correct: 0 },
+        { q: "F2?", a: ["Rename qiladi", "Kopyalaydi", "Kesadi"], correct: 0 },
+        { q: "F1?", a: ["Yordam oynasi", "Boshlaydi", "Internetni yoqadi"], correct: 0 },
+        { q: "Ctrl + J?", a: ["Yuklamalar oynasi", "O‘chadi", "Skrin"], correct: 0 },
+        { q: "Ctrl + L?", a: ["Adresi bo‘yicha fokus", "Ochadi", "Yopadi"], correct: 0 },
+        { q: "Alt + F4?", a: ["Dasturni yopadi", "Kompyuterni o‘chiradi", "Print qiladi"], correct: 0 },
+        { q: "Windows + E?", a: ["Explorer ochadi", "Ekran oladi", "Ochiradi"], correct: 0 },
+        { q: "Windows + D?", a: ["Ish stoliga qaytadi", "Monitorni o‘chiradi", "Ovoz oshadi"], correct: 0 },
+        { q: "Windows + L?", a: ["Kompyuterni bloklaydi", "O‘chiradi", "Skachat qiladi"], correct: 0 },
+        { q: "Windows + R?", a: ["Run oynasi", "Restart", "Kalkulyator"], correct: 0 }
+      ],
+      sew: [
+        { q: "Igna nima?", a: ["Tikish asbobi", "Qaychi", "O‘lchagich"], correct: 0 },
+        { q: "Metrlik nima?", a: ["O‘lchagich", "Gazlama", "Qaychi"], correct: 0 },
+        { q: "Overlok nima uchun?", a: ["Chegarani tikish", "O‘lchash", "Kesish"], correct: 0 },
+        { q: "Gazlama nima?", a: ["Matо", "Plastik", "Metall"], correct: 0 },
+        { q: "Maniken?", a: ["Kiyim o‘lchash modeli", "Ip turi", "Mashina turi"], correct: 0 },
+        { q: "Ip nima?", a: ["Tikish uchun", "Surtish uchun", "Bo‘yash uchun"], correct: 0 },
+        { q: "Chok nima?", a: ["Tikilgan chiziq", "O‘lcham", "Matо"], correct: 0 },
+        { q: "Qaychi?", a: ["Kesish uchun", "Tikish uchun", "Ulash uchun"], correct: 0 },
+        { q: "Mashina pedali?", a: ["Boshqaradi", "Kesadi", "Qizdiradi"], correct: 0 },
+        { q: "O‘lcham olish?", a: ["Metrlik bilan", "Mashina bilan", "Igna bilan"], correct: 0 },
+        { q: "Pog‘onali chok?", a: ["Mustahkam chok", "Yengil chok", "To‘g‘ri chok"], correct: 0 },
+        { q: "Yelim lenta nima?", a: ["Mahkamlash uchun", "Chizish uchun", "Kesish uchun"], correct: 0 },
+        { q: "Paxta mato?", a: ["Tabiy", "Suniy", "Metall"], correct: 0 },
+        { q: "Saten?", a: ["Yaltiroq mato", "Oq mato", "Qalin mato"], correct: 0 },
+        { q: "Atlas?", a: ["Yaltiroq mato", "Sintetik", "Paxta"], correct: 0 },
+        { q: "Gazlama eni?", a: ["90–120 sm", "150 sm", "20 sm"], correct: 0 },
+        { q: "Naqsh?", a: ["Chizma", "Ip", "Gazlama"], correct: 0 },
+        { q: "Yeng nima?", a: ["Qo‘l qismi", "Yaka", "Bel"], correct: 0 },
+        { q: "Yaka?", a: ["Bo‘yin qismi", "Yeng qismi", "Etak"], correct: 0 },
+        { q: "Etak?", a: ["Pastki qism", "O‘rta qism", "Yuqori qism"], correct: 0 },
+        { q: "Oyoqchalar?", a: ["Mashina oyoqchasi", "Chok", "To‘r"], correct: 0 },
+        { q: "Ip kuchi?", a: ["Toshlanish kuchi", "O‘lcham", "Rang"], correct: 0 },
+        { q: "Tikiuv mashinasi?", a: ["Tikadi", "Kesadi", "O‘lchaydi"], correct: 0 },
+        { q: "Sochiq chok?", a: ["Dekor chok", "O‘tkir chok", "Chegara chok"], correct: 0 },
+        { q: "Chizma o‘lchami?", a: ["Naqsh bo‘yicha", "Ip bo‘yicha", "Mashina bo‘yicha"], correct: 0 },
+        { q: "Dublar?", a: ["Yelim qoplama", "Chizma turi", "Mato turi"], correct: 0 },
+        { q: "Ko‘ylak?", a: ["Kiyim turi", "Qaychi turi", "Mashina turi"], correct: 0 },
+        { q: "Kofta?", a: ["Ustki kiyim", "Pastki kiyim", "Oyoq kiyim"], correct: 0 },
+        { q: "Uzunlik?", a: ["Metrlarda", "Gramlarda", "Litrda"], correct: 0 },
+        { q: "Rang mosligi?", a: ["Dizayn qismi", "Material qismi", "Texnika qismi"], correct: 0 }
+      ],
+      elec: [
+        { q: "Tok kuchining birligi?", a: ["Amper", "Volt", "Vatt"], correct: 0 },
+        { q: "Kuchlanish birligi?", a: ["Volt", "Amper", "Om"], correct: 0 },
+        { q: "Qarshilik birligi?", a: ["Om", "Volt", "Amper"], correct: 0 },
+        { q: "Faza simi qaysi rang?", a: ["Qizil", "Ko‘k", "Sariq"], correct: 0 },
+        { q: "Nol sim?", a: ["Ko‘k", "Qora", "Qizil"], correct: 0 },
+        { q: "Zamin sim?", a: ["Sariq-yashil", "Qora", "Oq"], correct: 0 },
+        { q: "Tok nima?", a: ["Elektr zaryadi oqimi", "Issiqlik", "Nur"], correct: 0 },
+        { q: "Qisqa tutashuv?", a: ["Nosoz ulanish", "Tok yo‘qligi", "Zaryad yo‘qligi"], correct: 0 },
+        { q: "Avtomat nima qiladi?", a: ["Himoya qiladi", "Kuchaytiradi", "Kamaytiradi"], correct: 0 },
+        { q: "Voltmetr nima o‘lchaydi?", a: ["Kuchlanish", "Tok", "Quvvat"], correct: 0 },
+        { q: "Ampermetr?", a: ["Tok", "Volt", "Quvvat"], correct: 0 },
+        { q: "Lampochka nima?", a: ["Yorug‘lik manbai", "Sim", "Priz"], correct: 0 },
+        { q: "Priz nima?", a: ["Ulanish joyi", "Lampochka", "O‘chirgich"], correct: 0 },
+        { q: "Transformator nima qiladi?", a: ["Kuchlanishni o‘zgartiradi", "O‘chiradi", "Qizdiradi"], correct: 0 },
+        { q: "Vatt?", a: ["Quvvat birligi", "Tok kuchi", "Qarshilik"], correct: 0 },
+        { q: "Diode?", a: ["Bir yo‘nalishda o‘tkazadi", "Ikki yo‘nalishda", "Hech o‘tkazmaydi"], correct: 0 },
+        { q: "Rele?", a: ["Avtomatik kalit", "Chiroq", "Sim"], correct: 0 },
+        { q: "Stabilizator?", a: ["Kuchlanishni barqarorlaydi", "O‘chiradi", "Yoqadi"], correct: 0 },
+        { q: "Izolyatsiya?", a: ["Himoya qatlami", "Tok manbai", "Lampochka"], correct: 0 },
+        { q: "Multimetr?", a: ["O‘lchash asbobi", "Kesgich", "Qizdirgich"], correct: 0 },
+        { q: "Qanday tok xavfli?", a: ["Nam sharoitdagi", "Quruq sharoitdagi", "Sovuq"], correct: 0 },
+        { q: "Uch faza nechta simdan?", a: ["4", "2", "1"], correct: 0 },
+        { q: "Shnurer nima?", a: ["Sim", "Lampochka", "Kalit"], correct: 0 },
+        { q: "Qaysi kuchlanish xavfli?", a: ["220V", "12V", "5V"], correct: 0 },
+        { q: "Sigorta?", a: ["Himoya uchun", "Yoritish uchun", "Yuvish uchun"], correct: 0 },
+        { q: "Elektr o‘lchov birligi W bu?", a: ["Vatt", "Volt", "Amper"], correct: 0 },
+        { q: "RCD nima?", a: ["Tokdan himoya qurilmasi", "Lampa", "Rezistor"], correct: 0 },
+        { q: "Dvigatel?", a: ["Harakat beradi", "Sovutadi", "Issitadi"], correct: 0 },
+        { q: "Chastota birligi?", a: ["Hertz", "Volt", "Amper"], correct: 0 },
+        { q: "Sim uzilganda?", a: ["Tok o‘tmaydi", "Kuchayadi", "Zaryadlanadi"], correct: 0 }
+      ]
+    };
+
+    let currentTest = [];
+    let index = 0;
+    let score = 0;
+
+    function showSubjects() {
+      document.getElementById("start-screen").classList.add("hidden");
+      document.getElementById("subject-screen").classList.remove("hidden");
+    }
+
+    function startTest(subj) {
+      currentTest = questions[subj];
+      index = 0;
+      score = 0;
+
+      document.getElementById("subject-screen").classList.add("hidden");
+      document.getElementById("test-screen").classList.remove("hidden");
+
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      document.getElementById("feedback").innerHTML = "";
+      document.getElementById("next-btn").classList.add("hidden");
+
+      if (index >= currentTest.length) {
+        endTest();
+        return;
+      }
+
+      const q = currentTest[index];
+      document.getElementById("question-text").textContent = q.q;
+
+      const answers = document.getElementById("answers");
+      answers.innerHTML = "";
+
+      q.a.forEach((ans, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = ans;
+        btn.className = "answer-btn";
+        btn.onclick = () => checkAnswer(i);
+        answers.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(i) {
+      const correct = currentTest[index].correct;
+
+      if (i === correct) {
+        score++;
+        document.getElementById("feedback").innerHTML = "<span style='color:#00ff7f;'>To‘g‘ri ✔</span>";
+      } else {
+        document.getElementById("feedback").innerHTML = "<span style='color:red;'>Noto‘g‘ri ✖</span>";
+      }
+
+      document.querySelectorAll(".answer-btn").forEach(btn => btn.disabled = true);
+
+      document.getElementById("next-btn").classList.remove("hidden");
+    }
+
+    function nextQuestion() {
+      index++;
+      loadQuestion();
+    }
+
+    function endTest() {
+      document.getElementById("test-screen").classList.add("hidden");
+      document.getElementById("result").innerHTML =
+        "Test tugadi! <br> Sizning ballingiz: <b>" + score + "</b>";
+    }
+
+    function restart() {
+      index = 0;
+      score = 0;
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("test-screen").classList.remove("hidden");
+      loadQuestion();
+    }
+
+    function goHome() {
+      location.reload();
+    }
+
+    /* --- Yulduzlar animatsiya --- */
+    const canvasEl = document.getElementById("stars");
+    const ctx = canvasEl.getContext("2d");
+    let w, h;
+
+    function resize() { w = canvasEl.width = window.innerWidth; h = canvasEl.height = window.innerHeight; }
+    window.addEventListener("resize", resize);
+    resize();
+
+    const numStars = 200;
+    const stars = [];
+
+    for (let i = 0; i < numStars; i++) {
+      stars.push({ x: Math.random() * w, y: Math.random() * h, size: Math.random() * 2, speedX: (Math.random() - .5) * .6, speedY: (Math.random() - .5) * .6, color: Math.random() > .5 ? "#00eaff" : "#ff3cac" });
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, w, h);
+      stars.forEach(s => {
+        s.x += s.speedX; s.y += s.speedY;
+        if (s.x < 0 || s.x > w) s.speedX *= -1;
+        if (s.y < 0 || s.y > h) s.speedY *= -1;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2); ctx.fillStyle = s.color; ctx.fill();
+      });
+      requestAnimationFrame(drawStars);
+    }
+    drawStars();
+  </script>
+
+</body>
+
+</html>

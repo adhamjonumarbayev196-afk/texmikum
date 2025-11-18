@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kollej qoidalari — To‘rtko‘l 2-son Politexnikumi</title>
+<style>
+  :root{
+    --bg1:#02010a;
+    --cyan:#00eaff;
+    --muted:#bfcad6;
+    --card: rgba(10,12,20,0.65);
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg1);color:#fff}
+  /* canvas background (yulduzlar + chiziqlar) */
+  canvas#bg {position:fixed;inset:0;z-index:-1;display:block}
+
+  /* page container */
+  .wrap{max-width:1100px;margin:34px auto;padding:24px}
+  header{ text-align:center;margin-bottom:18px }
+  header h1{font-size:28px;color:var(--cyan);text-shadow:0 0 18px rgba(0,234,255,0.12);margin:6px 0}
+  header p{color:var(--muted);margin:0;font-size:15px}
+
+  /* card */
+  .card{background:var(--card);border-radius:14px;padding:18px;margin:16px 0;border:1px solid rgba(0,234,255,0.06);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+  .card h2{margin:6px 0 10px;color:var(--cyan);font-size:18px}
+  .card p{color:var(--muted);line-height:1.6;margin:8px 0}
+  .list{margin:8px 0 0;padding-left:18px;color:var(--muted)}
+  .list li{margin:8px 0}
+
+  /* small meta */
+  .meta{font-size:14px;color:#9fb0bf;margin-top:6px}
+
+  /* back button */
+  .back{display:inline-block;margin-top:12px;padding:10px 14px;border-radius:10px;border:1px solid rgba(0,234,255,0.12);color:var(--cyan);text-decoration:none}
+  .back:hover{background:rgba(0,234,255,0.06);color:#000}
+
+  /* responsive typography */
+  @media (max-width:640px){
+    header h1{font-size:22px}
+    .card{padding:14px}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="wrap">
+  <header>
+    <h1>Kollej qoidalari</h1>
+    <p>To‘rtko‘l tumani 2-son Politexnikumi — o‘qish va muhit uchun umumiy qoidalar</p>
+  </header>
+
+  <section class="card">
+    <h2>1. Umumiy qoidalar</h2>
+    <p>Har bir talaba kollejning ichki tartib qoidalariga rioya qilishi shart. O‘qish jarayonida hurmat, o‘z vaqtida kelish va topshiriqlarni bajarish asosiy talab hisoblanadi.</p>
+    <ul class="list">
+      <li>Darslarga 5 daqiqa oldin kelish va belgilangan kiyimda bo‘lish.</li>
+      <li>Sinflarda tartibli bo‘lish, zaruriy jihozlari bilan kelish (daftar, ruchka, kompyuter va h.k.).</li>
+      <li>Shaxsiy gigiena va tozalikka e'tibor berish.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>2. Kiyim (dress code)</h2>
+    <p>Talabalar kiyimi toza, tartibli va kasbiy muhitga mos bo‘lishi kerak. Kollejda ruxsat etilgan hamda ruxsat etilmagan kiyim turlari mavjud.</p>
+    <ul class="list">
+      <li>Ruxsat etilgan: formal yoki neat casual kiyimlar, ish kiyimi (amaliy mashg‘ulotlarda kiyiladigan kiyimlar).</li>
+      <li>Ruxsat etilmagan: juda qisqa yoki juda ochiq kiyimlar, provokatsion yozuv/rasmli kiyimlar.</li>
+      <li>Ish latofati va texnik xodimlar talab qilgan xavfsizlik kiyimlarini amaliy mashg‘ulotlarda kiyish majburiy.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>3. Davomat va kechikish</h2>
+    <p>Davomatni o‘qituvchi qayd etadi. Kechikishlar va ruxsatsiz qolishlar haqida quyidagicha:</p>
+    <ul class="list">
+      <li>Har 3 ta ruxsatsiz kechikish hisobga olinadi; muntazam kechikishlar ota-onaga/xodimlarga xabar qilinadi.</li>
+      <li>Kasallik yoki boshqa sabablarga ko‘ra darsga kelmaslik – oldindan yoki imkon qadar tez xabar berish majburiy.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>4. Intizom va odob-axloq</h2>
+    <p>Kollejda hurmat, adolat va do‘stlik muhiti saqlanishi kerak. O‘qituvchilarga va hamkasblarga nisbatan hurmat – majburiydir.</p>
+    <ul class="list">
+      <li>Zo‘ravonlik, tahdid, haqorat yoki kamsituvchi harakatlar qat’iyan man etiladi.</li>
+      <li>Guruh ichida muammolar yuzaga kelganda, avvalo ustozga yoki ma’muriyatga murojaat qilinadi.</li>
+      <li>Talabalar ijtimoiy tarmoqlarda kollejni sharmanda qiluvchi harakatlardan saqlanishi lozim.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>5. Xavfsizlik qoidalari</h2>
+    <p>Amaliy mashg‘ulotlar, laboratoriyalar va ustaxonalar uchun alohida xavfsizlik qoidalari mavjud:</p>
+    <ul class="list">
+      <li>Ustaxona va laboratoriyalarda himoya kiyimlarini kiyish (kask, qo‘lqop, old kiyim va boshqalar).</li>
+      <li>Elektr jihozlari bilan ishlaganda xavfsizlik qoidalariga qat’iy rioya qilish.</li>
+      <li>Favqulodda holatda o‘t yo‘qotish choralari va favqulodda chiqish yo‘laklari haqida xabardor bo‘lish.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>6. Imtihonlar va baholash</h2>
+    <p>Imtihonlarda halollik – ustuvor. Baholash mezonlariga qat’iy amal qilinadi.</p>
+    <ul class="list">
+      <li>Imtihonlarda nusxa ko‘chirish yoki yordam so‘rash qat’iyan taqiqlanadi.</li>
+      <li>Imtihon qoidalari buzilganda, tegishli choralar ko‘riladi (ish qayta topshirish, diskvalifikatsiya, ma’muriy chora).</li>
+      <li>Baho va attestatsiya natijalarini ko‘rib chiqish uchun murojaat qilish tartibi ma’lum muddat ichida amalga oshiriladi.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>7. Kutubxona va o‘quv resurslari</h2>
+    <p>Kutubxona qoidalariga rioya qilinishi talab etiladi:</p>
+    <ul class="list">
+      <li>Kitoblarni o‘z vaqtida qaytarish.</li>
+      <li>Kutubxonada jim bo‘lish va boshqa o‘quvchilarga hurmat.</li>
+      <li>Elektron resurslardan foydalanish tartibi va foydalanish cheklovlari.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>8. Elektron qurilmalar va mobil telefon</h2>
+    <p>Dars vaqtida telefon va boshqa chalg‘ituvchi qurilmalar o‘qituvchi ruxsatisiz ishlatilmasligi lozim.</p>
+    <ul class="list">
+      <li>Darsda telefonni ovozsiz rejimga qo‘yish va zarur bo‘lmagan holatda ishlatmaslik.</li>
+      <li>Amaliy mashg‘ulotlarda shaxsiy qurilmalarni faqat mas’ul o‘qituvchi ruxsati bilan olib kelish.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>9. Jazolar va intizom choralari</h2>
+    <p>Qoidabuzarlik hollari uchun quyidagi choralar qo‘llanilishi mumkin:</p>
+    <ul class="list">
+      <li>Ogohlantirish (og‘zaki yoki yozma)</li>
+      <li>Vaqtinchalik ma’ruza yoki mashg‘ulotlardan chetlashtirish</li>
+      <li>Jiddiy qoidabuzarliklarda ma’muriy yoki huquqiy choralar</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>10. Shikoyat va murojaatlar</h2>
+    <p>Agar talabalar yoki ota-onalarda shikoyat yoki taklif bo‘lsa, quyidagi tartibda murojaat qilishi mumkin:</p>
+    <ul class="list">
+      <li>Avvalo mutaxassis (o‘qituvchi yoki guruh rahbari) bilan gaplashish.</li>
+      <li>Muammo hal bo‘lmasa — ma’muriyatga yozma murojaat yuborish.</li>
+      <li>Barcha murojaatlar ko‘rib chiqiladi va javob yozma shaklda beriladi.</li>
+    </ul>
+  </section>
+
+  <div style="text-align:center;margin-top:18px">
+    <a class="back" href="index.html">⬅ Bosh sahifaga qaytish</a>
+  </div>
+</div>
+
+<script>
+/* Canvas — yulduzlar + chiziqlar (eng oddiy, lekin vizual mos) */
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+function resize(){canvas.width = innerWidth; canvas.height = innerHeight;}
+resize(); addEventListener('resize', resize);
+
+const N = 140;
+let pts = [];
+for(let i=0;i<N;i++){
+  pts.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    vx: (Math.random()-0.5)*0.6,
+    vy: (Math.random()-0.5)*0.6,
+    r: Math.random()*1.6+0.4,
+    c: Math.random()>0.6? '#00eaff' : '#ff3baf'
+  });
+}
+
+function render(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // soft gradient background
+  const g = ctx.createLinearGradient(0,0,0,canvas.height);
+  g.addColorStop(0,'rgba(0,0,8,0.6)');
+  g.addColorStop(1,'rgba(0,0,4,0.95)');
+  ctx.fillStyle = g; ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // draw connecting lines (subtle)
+  for(let i=0;i<pts.length;i++){
+    for(let j=i+1;j<pts.length;j++){
+      const dx = pts[i].x-pts[j].x, dy = pts[i].y-pts[j].y;
+      const d = Math.sqrt(dx*dx+dy*dy);
+      if(d < 120){
+        ctx.strokeStyle = 'rgba(0,234,255,' + (1 - d/120)*0.08 + ')';
+        ctx.lineWidth = 0.2; ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.stroke();
+      }
+    }
+  }
+
+  // draw points
+  for(const p of pts){
+    ctx.beginPath();
+    ctx.fillStyle = p.c;
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+    p.x += p.vx; p.y += p.vy;
+    if(p.x < -10) p.x = canvas.width+10; if(p.x > canvas.width+10) p.x = -10;
+    if(p.y < -10) p.y = canvas.height+10; if(p.y > canvas.height+10) p.y = -10;
+  }
+
+  requestAnimationFrame(render);
+}
+render();
+</script>
+
+</body>
+</html>
