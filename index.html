@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="uz">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" type="image/png" href="photo3.jpg">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To‘rtko‘l 2-son Politexnikumi</title>
+  <style>
+    .top-header {
+      width: 100%;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+    }
+
+    .nav {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      padding-right: 40px;
+    }
+
+    .nav a {
+      color: #00eaff;
+      font-size: 18px;
+      text-decoration: none;
+      padding: 8px 14px;
+      transition: 0.3s;
+    }
+
+    .nav a:hover {
+      color: white;
+      text-shadow: 0 0 10px #00eaff;
+    }
+
+    /* --- Umumiy sozlamalar --- */
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, #02010a, #000010);
+      font-family: "Poppins", sans-serif;
+      color: white;
+    }
+
+    /* --- Yulduzli fon --- */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    /* --- Sarlavha --- */
+    header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 100px 20px 60px;
+    }
+
+    header h1 {
+      font-size: 2.8em;
+      color: #00eaff;
+      text-shadow: 0 0 25px #00eaff;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #ccc;
+      letter-spacing: 1px;
+    }
+
+    /* --- Kartochkalar bo‘limi --- */
+    .cards {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      padding: 20px 60px 100px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 234, 255, 0.2);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 25px rgba(0, 234, 255, 0.5);
+    }
+
+    .card img {
+      width: 100%;
+      height: 160px;
+      border-radius: 12px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      color: #00eaff;
+      margin: 10px 0 5px;
+    }
+
+    .card p {
+      color: #bbb;
+      font-size: 0.95em;
+    }
+
+    /* --- Footer --- */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: #777;
+      padding-bottom: 30px;
+      font-size: 0.9em;
+    }
+
+
+    .new-footer {
+      background: rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(3px);
+      padding: 60px 40px;
+      color: #fff;
+      position: relative;
+      z-index: 10;
+    }
+
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    .footer-col h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .footer-col a {
+      display: block;
+      color: #bbb;
+      text-decoration: none;
+      margin: 8px 0;
+      transition: 0.3s;
+    }
+
+    .footer-col a:hover {
+      color: #00eaff;
+      transform: translateX(5px);
+    }
+
+    /* LOGO */
+    .footer-logo {
+      width: 80px;
+      margin-bottom: 15px;
+    }
+
+    /* --- Neon Button Style --- */
+    .footer-btn {
+      display: block;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 16px;
+      margin-top: 12px;
+      border-radius: 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* ----------------------- */
+    /*  CYBERLAND HEADER BASE  */
+    /* ----------------------- */
+    .cyber-header {
+      width: 100%;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.35);
+    }
+
+    /* Logo qismi */
+    .cyber-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cyber-logo img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      box-shadow: 0 0 15px cyan;
+    }
+
+    .cyber-logo span {
+      font-size: 20px;
+      font-weight: bold;
+      color: cyan;
+      text-shadow: 0 0 10px cyan;
+    }
+
+    /* Navigatsiya */
+    .cyber-nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    .cyber-nav a {
+      color: cyan;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 500;
+      text-shadow: 0 0 8px cyan;
+      transition: 0.3s;
+    }
+
+    .cyber-nav a:hover {
+      color: white;
+      text-shadow: 0 0 15px white;
+    }
+
+    /* ----------------------- */
+    /*     MOBILE VERSION      */
+    /* ----------------------- */
+
+    @media (max-width: 768px) {
+      .cyber-header {
+        padding: 12px 15px;
+      }
+
+      .cyber-logo img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .cyber-logo span {
+        font-size: 18px;
+      }
+
+      /* Menuni mobilga moslash */
+      .cyber-nav {
+        gap: 15px;
+      }
+
+      .cyber-nav a {
+        font-size: 15px;
+      }
+    }
+
+    /* Ultra kichik telefonlar (iPhone SE va boshqalar) */
+    @media (max-width: 480px) {
+
+      .cyber-header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 5px;
+      }
+
+      .cyber-logo span {
+        font-size: 16px;
+      }
+
+      .cyber-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .cyber-nav a {
+        font-size: 14px;
+      }
+    }
+
+    /* Hover effekti */
+    .footer-btn:hover {
+      background: rgba(0, 217, 255, 0.15);
+      border-color: #00eaff;
+      color: #00eaff;
+      box-shadow: 0 0 12px #00eaff;
+      transform: translateY(-3px) scale(1.02);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .footer-left {
+      width: 300px;
+    }
+
+    .footer-brand {
+      font-size: 26px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #4de2ff, #ac4bff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .footer-desc {
+      margin-top: 15px;
+      font-size: 17px;
+      color: #cfcfcf;
+      line-height: 1.5;
+    }
+
+    .footer-social {
+      margin-top: 25px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .footer-social a {
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 50%;
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #66e2ff;
+      transition: 0.3s;
+    }
+
+    .footer-social a:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* SOCIAL LINKS */
+    .social-links {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .social-icon {
+      font-size: 28px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: white;
+      transition: 0.3s ease;
+    }
+
+    /* HOVER */
+    .social-icon:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    /* ----------------------- */
+
+    /* Ranglar */
+    .telegram {
+      color: #00aaff;
+    }
+
+    .instagram {
+      color: #ff00c8;
+    }
+
+    .facebook {
+      color: #1877f2;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="cyber-header">
+    <div class="cyber-logo">
+      <img src="photo3.jpg" alt="logo">
+      <span>POLITEXNIKUM</span>
+    </div>
+
+    <nav class="cyber-nav">
+      <a href="index.html">Bosh sahifa</a>
+      <a href="oqituvchilar.html">O'qituvchilar</a>
+      <a href="#">Loyihalar</a>
+      <a href="#footer">Bog'lanish</a>
+    </nav>
+  </header>
+
+  <canvas id="stars"></canvas>
+
+  <header>
+    <h1>To‘rtko‘l tumani 2-son Politexnikumi</h1>
+    <p>Texnik bilimlar markazi — zamonaviy kasblar sari yo‘l!</p>
+  </header>
+  <div class="cards" style="display: flex; justify-content: center;align-items: center;">
+    <div class="card" style="max-width: 300px;">
+      <img src="photo3.jpg" alt="">
+      <h3></h3>
+      <p>To'rtko'l tumani 2-son Politexnikumi</p>
+    </div>
+  </div>
+  <section class="cards">
+    <div class="card">
+      <img src="photo3.jpg" alt="Bino rasmi">
+      <h3></h3>
+    </div>
+    <div class="card">
+      <img src="photo10.jpg" alt="O‘quvchilar rasmi">
+      <h3></h3>
+    </div>
+
+    <div class="card">
+      <img src="photo6.jpg" alt="Laboratoriya rasmi">
+      <h3>The project aims to improve practical electrical skills among students of the Tortkol 2 Polytechnic Technical
+        College. The focus is on hands-on training in basic wiring, safety procedures, circuit installation, and the use
+        of modern electrical tools.
+
+        This project will create a modern practical training workshop equipped with electrical panels, meters, and
+        simulation tools. It will help students gain real-world experience, improve employability, and meet industry
+        standards in technical education.</h3>
+    </div>
+
+    <div class="card">
+      <img src="photo2.jpg" alt="">
+      <h3>64 group students are working on creating a new clothing style for women.</h3>
+      <p></p>
+    </div>
+  </section>
+  <section class="cards">
+    <div class="card">
+      <img src="photo11.jpg" alt="">
+      <h3>The boys of Polytechnic No. 2 won first place, and the girls took second place in the volleyball competition
+        held in Tortkol district, securing their place in the next stage.</h3>
+    </div>
+
+    <div class="card">
+      <img src="photo12.jpg" alt="">
+      <h3></h3>
+    </div>
+
+    <div class="card">
+      <img src="photo13.jpg" alt="">
+      <h3></h3>
+    </div>
+
+    <div class="card">
+      <img src="photo15.jpg" alt="">
+      <h3>The students are taking exams in tractor and automotive engineering.</h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo14.jpg" alt="">
+      <h3></h3>
+    </div>
+
+    <div class="card">
+      <img src="photo16.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo17.jpg" alt="">
+      <h3>Students in the sewing specialization are doing their practical training.</h3>
+    </div>
+
+    <div class="card">
+      <img src="photo18.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo10.jpg" alt="">
+      <h3></h3>
+    </div>
+
+    <div class="card">
+      <img src="photo19.jpg" alt="">
+      <h3>Informatika oʻqituvchisi Egambergenova Maftuna Suniy intellekt boʻyicha oʻquvchilarga konferensiya oʻtqazdi
+      </h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo21.jpg" alt="">
+      <h3></h3>
+    </div>
+
+    <div class="card">
+      <img src="photo22.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo23.jpg" alt="">
+      <h3>52/24guruh payvandlovchi elektrogazpayvandlash kasbi I. Ch. T. Ustasi Shavkat Atadjanov</h3>
+    </div>
+
+    <div class="card">
+      <img src="photo24.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo25.jpg" alt="">
+      <h3></h3>
+    </div>
+
+    <div class="card">
+      <img src="photo26.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo27.jpg" alt="">
+      <h3>“A seminar was held with the aim of encouraging students to read literary works.” Teacher Mss Sojida</h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo28.jpg" alt="">
+      <h3></h3>
+    </div>
+
+    <div class="card">
+      <img src="photo29.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo30.jpg" alt="">
+      <h3>ʼDAF INTER EKSPORT ʼ MChJ korxonasi bilan xamkorlikda </h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo31.jpg" alt="">
+      <h3></h3>
+    </div>
+
+    <div class="card">
+      <img src="photo32.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo33.jpg" alt="">
+      <h3></h3>
+    </div>
+
+    <div class="card">
+      <img src="photo34.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo35.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+     </div>
+    <div class="card">
+      <img src="photo36.jpg" alt="">
+      <h3>Mamlakat boyicha otkazilayotgan Besh tashabbus boyicha otkazilayotgan musobaqada Tortkol Tumani 2 sonli Politexnikum birinchi bosqichda faxrli birinchi orinni egalladi</h3>
+    </div>
+
+    <div class="card">
+      <img src="photo37.jpg" alt="">
+      <h3>In the nationwide competition held under the Five Initiatives program, the Tortkol District Polytechnic College No. 2 secured an honorable first place in the initial stage.”</h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo38.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+  </section>
+
+  <footer class="new-footer">
+
+    <div class="footer-container">
+
+      <div class="footer-left">
+        <h2 class="footer-brand">To‘rtko‘l 2-son Politexnikumi</h2>
+
+        <p class="footer-desc">
+          Zamonaviy texnika va axborot texnologiyalari bo‘yicha yetakchi bilim maskani.
+          O‘quvchilarimizni kelajak kasblariga tayyorlaymiz.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h3>Sahifalarimiz</h3>
+        <a href="test.html">test</a>
+        <a href="qoidalar.html">qoidalar</a>
+        <a href="oqituvchilar.html">o'qituvchilar</a>
+      </div>
+      <div class="footer-col">
+        <h3>Foydali linklar</h3>
+        <a href="https://ziyonet.uz" target="_blank">Ziyonet.uz</a>
+        <a href="https://president.uz" target="_blank">Prezident.uz</a>
+        <a href="https://dtm.uz" target="_blank">DTM</a>
+        <a href="https://my.gov.uz" target="_blank">MyGov</a>
+        <a href="https://oneid.uz" target="_blank">OneID</a>
+        <a href="https://kun.uz" target="_blank">Kun.uz</a>
+      </div>
+
+
+      <div class="footer-col">
+        <h3>Bog'lanish</h3>
+        <!-- <p>304 North Cardinal St.<br>Dorchester Center, MA 02124</p> -->
+
+        <a class="footer-btn" href="tel:+998918709297">
+          📞 +998 91 870 92 97
+        </a>
+
+        <a class="footer-btn" href="@turtkul-texnikum2.uz">
+          📧 info@turtkul-texnikum2.uz
+        </a>
+      </div>
+
+    </div>
+    <div class="social-links">
+      <a href="https://t.me/turtkul_texnikum2" target="_blank" class="social-icon telegram">
+        <i class="fab fa-telegram"></i>
+      </a>
+
+      <a href="https://instagram.com/politexnikum_2son" target="_blank" class="social-icon instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+
+      <a href="https://facebook.com/USERNAME" target="_blank" class="social-icon facebook">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </div>
+    <div class="footer-bottom">
+      © 2025 To‘rtko‘l 2-son Politexnikumi. Barcha huquqlar himoyalangan.
+    </div>
+    <footer class="new-footer" id="footer">
+
+    </footer>
+
+    <!-- <footer>
+    © 2025 To‘rtko‘l 2-son Politexnikumi. Barcha huquqlar himoyalangan.
+  </footer> -->
+
+    <!-- --- Yulduzlar animatsiyasi --- -->
+    <script>
+      const canvas = document.getElementById("stars");
+      const ctx = canvas.getContext("2d");
+      let w, h;
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      const numStars = 200;
+      const stars = [];
+
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          size: Math.random() * 2,
+          speedX: (Math.random() - 0.5) * 0.6,
+          speedY: (Math.random() - 0.5) * 0.6,
+          color: Math.random() > 0.5 ? "#00eaff" : "#ff3cac"
+        });
+      }
+
+      function drawStars() {
+        ctx.clearRect(0, 0, w, h);
+        stars.forEach(star => {
+          star.x += star.speedX;
+          star.y += star.speedY;
+
+          if (star.x < 0 || star.x > w) star.speedX *= -1;
+          if (star.y < 0 || star.y > h) star.speedY *= -1;
+
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+          ctx.fillStyle = star.color;
+          ctx.fill();
+        });
+
+        // yulduzlar orasidagi chiziqlar
+        for (let i = 0; i < stars.length; i++) {
+          for (let j = i + 1; j < stars.length; j++) {
+            const dx = stars[i].x - stars[j].x;
+            const dy = stars[i].y - stars[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              ctx.strokeStyle = "rgba(0,234,255," + (1 - dist / 120) + ")";
+              ctx.lineWidth = 0.2;
+              ctx.beginPath();
+              ctx.moveTo(stars[i].x, stars[i].y);
+              ctx.lineTo(stars[j].x, stars[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        requestAnimationFrame(drawStars);
+      }
+
+      drawStars();
+    </script>
+</body>
+
+</html>
