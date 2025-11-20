@@ -8,6 +8,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To‘rtko‘l 2-son Politexnikumi</title>
   <style>
+    .top-header {
+      width: 100%;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+    }
+
+    .nav {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      padding-right: 40px;
+    }
+
+    .nav a {
+      color: #00eaff;
+      font-size: 18px;
+      text-decoration: none;
+      padding: 8px 14px;
+      transition: 0.3s;
+    }
+
+    .nav a:hover {
+      color: white;
+      text-shadow: 0 0 10px #00eaff;
+    }
+
     /* --- Umumiy sozlamalar --- */
     html,
     body {
@@ -160,6 +194,118 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    /* ----------------------- */
+    /*  CYBERLAND HEADER BASE  */
+    /* ----------------------- */
+    .cyber-header {
+      width: 100%;
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.35);
+    }
+
+    /* Logo qismi */
+    .cyber-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cyber-logo img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      box-shadow: 0 0 15px cyan;
+    }
+
+    .cyber-logo span {
+      font-size: 20px;
+      font-weight: bold;
+      color: cyan;
+      text-shadow: 0 0 10px cyan;
+    }
+
+    /* Navigatsiya */
+    .cyber-nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    .cyber-nav a {
+      color: cyan;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 500;
+      text-shadow: 0 0 8px cyan;
+      transition: 0.3s;
+    }
+
+    .cyber-nav a:hover {
+      color: white;
+      text-shadow: 0 0 15px white;
+    }
+
+    /* ----------------------- */
+    /*     MOBILE VERSION      */
+    /* ----------------------- */
+
+    @media (max-width: 768px) {
+      .cyber-header {
+        padding: 12px 15px;
+      }
+
+      .cyber-logo img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .cyber-logo span {
+        font-size: 18px;
+      }
+
+      /* Menuni mobilga moslash */
+      .cyber-nav {
+        gap: 15px;
+      }
+
+      .cyber-nav a {
+        font-size: 15px;
+      }
+    }
+
+    /* Ultra kichik telefonlar (iPhone SE va boshqalar) */
+    @media (max-width: 480px) {
+
+      .cyber-header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 5px;
+      }
+
+      .cyber-logo span {
+        font-size: 16px;
+      }
+
+      .cyber-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .cyber-nav a {
+        font-size: 14px;
+      }
+    }
+
     /* Hover effekti */
     .footer-btn:hover {
       background: rgba(0, 217, 255, 0.15);
@@ -250,6 +396,8 @@
       box-shadow: 0 0 15px currentColor;
     }
 
+    /* ----------------------- */
+
     /* Ranglar */
     .telegram {
       color: #00aaff;
@@ -266,6 +414,19 @@
 </head>
 
 <body>
+  <header class="cyber-header">
+    <div class="cyber-logo">
+      <img src="photo3.jpg" alt="logo">
+      <span>POLITEXNIKUM</span>
+    </div>
+
+    <nav class="cyber-nav">
+      <a href="index.html">Bosh sahifa</a>
+      <a href="oqituvchilar.html">O'qituvchilar</a>
+      <a href="#">Loyihalar</a>
+      <a href="#footer">Bog'lanish</a>
+    </nav>
+  </header>
 
   <canvas id="stars"></canvas>
 
@@ -407,7 +568,7 @@
     </div>
     <div class="card">
       <img src="photo30.jpg" alt="">
-      <h3>ʼDAF INTER EKSPORT ʼ MChJ кархонаси бн хакорликда Дуал таьлим</h3>
+      <h3>ʼDAF INTER EKSPORT ʼ MChJ korxonasi bilan xamkorlikda </h3>
       <p></p>
     </div>
     <div class="card">
@@ -420,7 +581,7 @@
       <h3></h3>
       <p></p>
     </div>
-     <div class="card">
+    <div class="card">
       <img src="photo33.jpg" alt="">
       <h3></h3>
     </div>
@@ -430,8 +591,29 @@
       <h3></h3>
       <p></p>
     </div>
+    <div class="card">
+      <img src="photo35.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
+     </div>
+    <div class="card">
+      <img src="photo36.jpg" alt="">
+      <h3>Mamlakat boyicha otkazilayotgan Besh tashabbus boyicha otkazilayotgan musobaqada Tortkol Tumani 2 sonli Politexnikum birinchi bosqichda faxrli birinchi orinni egalladi</h3>
+    </div>
+
+    <div class="card">
+      <img src="photo37.jpg" alt="">
+      <h3>In the nationwide competition held under the Five Initiatives program, the Tortkol District Polytechnic College No. 2 secured an honorable first place in the initial stage.”</h3>
+      <p></p>
+    </div>
+    <div class="card">
+      <img src="photo38.jpg" alt="">
+      <h3></h3>
+      <p></p>
+    </div>
   </section>
-  
+
   <footer class="new-footer">
 
     <div class="footer-container">
@@ -463,7 +645,7 @@
 
 
       <div class="footer-col">
-        <h3>Kontakt ma'lumotlari</h3>
+        <h3>Bog'lanish</h3>
         <!-- <p>304 North Cardinal St.<br>Dorchester Center, MA 02124</p> -->
 
         <a class="footer-btn" href="tel:+998918709297">
@@ -492,77 +674,78 @@
     <div class="footer-bottom">
       © 2025 To‘rtko‘l 2-son Politexnikumi. Barcha huquqlar himoyalangan.
     </div>
+    <footer class="new-footer" id="footer">
 
-  </footer>
+    </footer>
 
-  <!-- <footer>
+    <!-- <footer>
     © 2025 To‘rtko‘l 2-son Politexnikumi. Barcha huquqlar himoyalangan.
   </footer> -->
 
-  <!-- --- Yulduzlar animatsiyasi --- -->
-  <script>
-    const canvas = document.getElementById("stars");
-    const ctx = canvas.getContext("2d");
-    let w, h;
+    <!-- --- Yulduzlar animatsiyasi --- -->
+    <script>
+      const canvas = document.getElementById("stars");
+      const ctx = canvas.getContext("2d");
+      let w, h;
 
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resize);
-    resize();
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resize);
+      resize();
 
-    const numStars = 200;
-    const stars = [];
+      const numStars = 200;
+      const stars = [];
 
-    for (let i = 0; i < numStars; i++) {
-      stars.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        size: Math.random() * 2,
-        speedX: (Math.random() - 0.5) * 0.6,
-        speedY: (Math.random() - 0.5) * 0.6,
-        color: Math.random() > 0.5 ? "#00eaff" : "#ff3cac"
-      });
-    }
-
-    function drawStars() {
-      ctx.clearRect(0, 0, w, h);
-      stars.forEach(star => {
-        star.x += star.speedX;
-        star.y += star.speedY;
-
-        if (star.x < 0 || star.x > w) star.speedX *= -1;
-        if (star.y < 0 || star.y > h) star.speedY *= -1;
-
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = star.color;
-        ctx.fill();
-      });
-
-      // yulduzlar orasidagi chiziqlar
-      for (let i = 0; i < stars.length; i++) {
-        for (let j = i + 1; j < stars.length; j++) {
-          const dx = stars[i].x - stars[j].x;
-          const dy = stars[i].y - stars[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx.strokeStyle = "rgba(0,234,255," + (1 - dist / 120) + ")";
-            ctx.lineWidth = 0.2;
-            ctx.beginPath();
-            ctx.moveTo(stars[i].x, stars[i].y);
-            ctx.lineTo(stars[j].x, stars[j].y);
-            ctx.stroke();
-          }
-        }
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          size: Math.random() * 2,
+          speedX: (Math.random() - 0.5) * 0.6,
+          speedY: (Math.random() - 0.5) * 0.6,
+          color: Math.random() > 0.5 ? "#00eaff" : "#ff3cac"
+        });
       }
 
-      requestAnimationFrame(drawStars);
-    }
+      function drawStars() {
+        ctx.clearRect(0, 0, w, h);
+        stars.forEach(star => {
+          star.x += star.speedX;
+          star.y += star.speedY;
 
-    drawStars();
-  </script>
+          if (star.x < 0 || star.x > w) star.speedX *= -1;
+          if (star.y < 0 || star.y > h) star.speedY *= -1;
+
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+          ctx.fillStyle = star.color;
+          ctx.fill();
+        });
+
+        // yulduzlar orasidagi chiziqlar
+        for (let i = 0; i < stars.length; i++) {
+          for (let j = i + 1; j < stars.length; j++) {
+            const dx = stars[i].x - stars[j].x;
+            const dy = stars[i].y - stars[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              ctx.strokeStyle = "rgba(0,234,255," + (1 - dist / 120) + ")";
+              ctx.lineWidth = 0.2;
+              ctx.beginPath();
+              ctx.moveTo(stars[i].x, stars[i].y);
+              ctx.lineTo(stars[j].x, stars[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        requestAnimationFrame(drawStars);
+      }
+
+      drawStars();
+    </script>
 </body>
 
 </html>
